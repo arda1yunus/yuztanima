@@ -7,7 +7,8 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_fronta
 cam = cv2.VideoCapture(0)
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-names = ['Unknown', 'Kullanici1', 'Kullanici2']  # ID'lere karşılık gelen isimler
+names = ['Unknown', 'Kullanici1', 'Kullanici2'] 
+
 
 while True:
     ret, frame = cam.read()
@@ -16,14 +17,14 @@ while True:
 
     for (x, y, w, h) in faces:
         id_, confidence = recognizer.predict(gray[y:y+h, x:x+w])
-        name = names[id_] if confidence < 70 else 'Bilinmiyor'
-        confidence_text = f"%{round(100 - confidence)} doğruluk"
+        name = names[id_] if confidence < 50 else 'Taninamadi'
+        confidence_text = f"%{round(100 - confidence)} veri uyusma"
         
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
         cv2.putText(frame, str(name), (x+5, y-5), font, 1, (255, 255, 255), 2)
         cv2.putText(frame, str(confidence_text), (x+5, y+h-5), font, 1, (255, 255, 0), 1)
 
-    cv2.imshow('Yüz Tanıma', frame)
+    cv2.imshow('Yuz Tanima', frame)
     if cv2.waitKey(10) & 0xFF == ord('q'):
         break
 
